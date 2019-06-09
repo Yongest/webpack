@@ -3,81 +3,93 @@ const HtmlWebpackPlugin = require('html-webpack-plugin'); //installed via npm
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const webpack = require('webpack')
+const webpack = require('webpack');
 
 module.exports = {
     //一个入口
     //entry: './src/main.js',
     //多入口
     entry: {
-        index:'./src/index.js',
-        my:'./src/my.js',
+        index: './src/index.js',
+        my: './src/my.js',
     },
-    devtool: 'cheap-module-eval-source-map',
+
     output: {
         path: path.join(__dirname, 'dist'),
         //filename: 'bundle.js',
         //多页出口
         filename: '[name].js',
 
-        publicPath:"/"
+        publicPath: "/"
     },
+    devtool: 'cheap-module-eval-source-map',
     //watch:true,
     //mode: 'development',
-    mode: 'production',
+    mode: 'development',
     devServer: {
         open: true,
         //contentBase: './src',
-        port: '8080',
+        port: '8082',
         hot: true,
         compress: true,
-        //config:'webpack.config.js'
-
+        //config:'webpack.base.js'
     },
     plugins: [
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery'
+        }),
         new HtmlWebpackPlugin({
-            filename:'index.html',
-            template: './src/index.html'
+            filename: 'index.html',
+            template: './src/index.html',
+            chunks: ['index']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'my.html',
+            template: './src/my.html',
+            chunks: ['my']
         }),
         new CleanWebpackPlugin(),
         new CopyPlugin([
             {
-                from: path.join(__dirname,'assets'),
-                to: 'assets' }
+                from: path.join(__dirname, 'assets'),
+                to: 'assets'
+            }
 
         ]),
         new webpack.BannerPlugin('zhangyong')
+
     ],
     module: {
         rules: [
-            { test: /\.css$/, use:[  'style-loader','css-loader'] },
+            {test: /\.css$/, use: ['style-loader', 'css-loader']},
             {
-                test:/\.less$/,
-                use:['style-loader','css-loader','less-loader']
+                test: /\.less$/,
+                use: ['style-loader', 'css-loader', 'less-loader']
             },
             {
-                test:/\.s(a|c)ss$/,
-                use:['style-loader','css-loader','sass-loader']
+                test: /\.s(a|c)ss$/,
+                use: ['style-loader', 'css-loader', 'sass-loader']
             },
             {
-                test:/\.(jpg|jpeg|png|bmp|gif)$/,
-                use:{
-                    loader:'url-loader',
-                    options:{
-                        limit:5*1024,
-                        outputPath:'images',
-                        name:'[name]-[hash:6].[ext]'
+                test: /\.(jpg|jpeg|png|bmp|gif)$/,
+                use: {
+                    loader: 'url-loader',
+                    options: {
+                        limit: 5 * 1024,
+                        outputPath: 'images',
+                        name: '[name]-[hash:6].[ext]'
                     }
                 }
             },
             {
-                test:/\.(woff|woff2|eot|svg|ttf)$/,
-                use:'url-loader'
+                test: /\.(woff|woff2|eot|svg|ttf)$/,
+                use: 'url-loader'
             },
             {
-                test:/\.js$/,
-                use:{
-                    loader:'babel-loader',
+                test: /\.js$/,
+                use: {
+                    loader: 'babel-loader',
                     //options:{
                     //    presets:['@babel/env'],
                     //    plugins:[
@@ -95,13 +107,24 @@ module.exports = {
                     //    ]
                     //}
                 },
-                exclude:/node_modules/
+                exclude: /node_modules/
             },
             {
                 test: /\.(htm|html)$/i,
                 loader: 'html-withimg-loader'
             }
 
+            //往全局作用域挂在jquery
+            //{
+            //    test: require.resolve('jquery'),
+            //    use: [{
+            //        loader: 'expose-loader',
+            //        options: '$'
+            //    }]
+            //}
+
+
         ]
     }
 }
+
