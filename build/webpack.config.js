@@ -5,10 +5,11 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 
+
 module.exports = {
-    //Ò»¸öÈë¿Ú
+    //Ò»ï¿½ï¿½ï¿½ï¿½ï¿½
     //entry: './src/main.js',
-    //¶àÈë¿Ú
+    //ï¿½ï¿½ï¿½ï¿½ï¿½
     entry: {
         index: './src/index.js',
         my: './src/my.js',
@@ -17,7 +18,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'dist'),
         //filename: 'bundle.js',
-        //¶àÒ³³ö¿Ú
+        //ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½
         filename: '[name].js',
 
         publicPath: "/"
@@ -114,7 +115,7 @@ module.exports = {
                 loader: 'html-withimg-loader'
             }
 
-            //ÍùÈ«¾Ö×÷ÓÃÓò¹ÒÔÚjquery
+            //ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½jquery
             //{
             //    test: require.resolve('jquery'),
             //    use: [{

@@ -5,3 +5,7 @@ console.log('my')
 //$('body').css({
 //    backgroundColor:'red'
 //})
+import $ from 'jquery'
+$('body'),html('mypage')
+
+import './less/my.less'

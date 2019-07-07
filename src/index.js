@@ -2,7 +2,7 @@
  * Created by 10468 on 2019/6/9.
  */
 console.log('home')
-//import $ from 'jquery'
+import $ from 'jquery'
 import './css/index.css'
 import './less/index.less'
 //import $ from 'jquery'
@@ -14,3 +14,5 @@ getUserInfo().then(()=>{},(err)=>{console.log(err)})
 //$("body").css({
 //    backgroundColor:'pink'
 //})
+
+$('body'),append('<h1>index</h1>')
